@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FirstApp</string>
+    <string name="main_thietlaptaikhoan">Thiết lập tài khoản</string>
+    <string name="main_doimatkhau">ĐỔI MẬT KHẨU</string>
+    <string name="main_capnhat">CẬP NHẬT</string>
+    <string name="main_nam">Nam</string>
+    <string name="main_nu">Nữ</string>
+    <string name="main_khac">Khác</string>
+    <string name="main_thongtincanhan">Thông tin cá nhân</string>
+</resources>
