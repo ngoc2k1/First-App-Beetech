@@ -7,4 +7,10 @@
     <string name="main_nu">Nữ</string>
     <string name="main_khac">Khác</string>
     <string name="main_thongtincanhan">Thông tin cá nhân</string>
+    <string name="chat_tinnhan">Tin nhắn</string>
+    <string name="main_trangchu">Trang chủ</string>
+    <string name="main_khambenh">Khám bệnh</string>
+    <string name="main_xetnghiem">Xét nghiệm</string>
+    <string name="main_hoso">Hồ sơ</string>
+    <string name="main_taikhoan">Tài khoản</string>
 </resources>

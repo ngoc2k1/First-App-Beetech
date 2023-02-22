@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_item_receive_mess"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/background_main_edittext"
+    android:backgroundTint="@color/white"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="11dp"
+    android:text="Hello"
+    android:textColor="@color/black">
+
+</androidx.appcompat.widget.AppCompatTextView>

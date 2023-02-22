@@ -8,8 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
-    <color name="yellow">#FFF0C52F</color>
+    <color name="light_yellow">#F0C42E</color>
+    <color name="dark_yellow">#F3B116</color>
+    <color name="yellow">#F3B116</color>
     <color name="background">#F2F2F2</color>
     <color name="light_blue">#42A3B3</color>
-    <color name="border_imageview_light_blue">#4BAEBD</color>
+    <color name="border_avatar_light_blue">#4BAEBD</color>
+    <color name="border_camera_light_blue">#43A4B4</color>
 </resources>

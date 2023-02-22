@@ -3,21 +3,21 @@
     <item
         android:id="@+id/trangchu"
         android:icon="@drawable/ic_trangchu"
-        android:title="Trang chủ" />
+        android:title="@string/main_trangchu" />
     <item
         android:id="@+id/khambenh"
         android:icon="@drawable/ic_khambenh"
-        android:title="Khám bệnh" />
+        android:title="@string/main_khambenh" />
     <item
         android:id="@+id/xetnghiem"
         android:icon="@drawable/ic_xetnghiem"
-        android:title="Khám bệnh" />
+        android:title="@string/main_xetnghiem" />
     <item
         android:id="@+id/hoso"
-        android:icon="@drawable/ic_trangchu"
-        android:title="Hồ sơ" />
+        android:icon="@drawable/ic_hoso"
+        android:title="@string/main_hoso" />
     <item
         android:id="@+id/taikhoan"
         android:icon="@drawable/ic_username"
-        android:title="Tài khoản" />
+        android:title="@string/main_taikhoan" />
 </menu>
