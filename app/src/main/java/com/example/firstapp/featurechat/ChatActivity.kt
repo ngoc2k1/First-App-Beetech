@@ -1,8 +1,10 @@
 package com.example.firstapp.featurechat
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.R
 import com.example.firstapp.databinding.ActivityChatBinding
@@ -19,6 +21,14 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            val window = this@ChatActivity.window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = this@ChatActivity.resources.getColor(R.color.light_blue)
+        }
+
         chatAdapter = ChatAdapter(this@ChatActivity, chatList)
         binding.rvChatChattogether.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

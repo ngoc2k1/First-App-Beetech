@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
     android:gravity="right"
     android:orientation="vertical"
     tools:ignore="RtlHardcoded">
@@ -11,8 +12,7 @@
         android:id="@+id/tv_item_send_mess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/background_main_icon"
+        android:background="@drawable/background_chat_textview_send"
         android:paddingHorizontal="14dp"
         android:paddingVertical="8dp"
         android:text="Hello"

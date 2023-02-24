@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             val window = this@MainActivity.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this@MainActivity.resources.getColor(R.color.background)
+            window.statusBarColor = this@MainActivity.resources.getColor(R.color.background_main)
         }
 
 

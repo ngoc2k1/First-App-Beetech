@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background_main">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_chat_back"
+        android:id="@+id/iv_main_back"
         android:layout_width="wrap_content"
         android:layout_height="?actionBarSize"
         android:layout_marginStart="24dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="@id/tv_main_title" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_chat_next"
+        android:id="@+id/iv_main_next"
         android:layout_width="wrap_content"
         android:layout_height="?actionBarSize"
         android:layout_marginEnd="24dp"
@@ -36,8 +36,8 @@
         android:text="@string/main_thietlaptaikhoan"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/iv_chat_back"
-        app:layout_constraintEnd_toStartOf="@id/iv_chat_next"
+        app:layout_constraintEnd_toStartOf="@id/iv_main_next"
+        app:layout_constraintStart_toEndOf="@id/iv_main_back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView

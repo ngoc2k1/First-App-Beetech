@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,14 +12,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/white"
-        android:backgroundTint="@color/background" />
+        android:backgroundTint="@color/background_main" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <View
         android:id="@+id/bottom_main_shadow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/bottom_main_navigate"
         android:layout_alignBottom="@id/bottom_main_navigate"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="-10dp"
         android:background="@drawable/shadow_main_bottombar" />
 
