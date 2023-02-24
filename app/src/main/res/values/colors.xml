@@ -15,4 +15,5 @@
     <color name="light_blue">#42A3B3</color>
     <color name="border_avatar_light_blue">#4BAEBD</color>
     <color name="border_camera_light_blue">#43A4B4</color>
+    <color name="transparent">#00000000</color>
 </resources>

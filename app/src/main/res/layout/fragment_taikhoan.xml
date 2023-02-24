@@ -1,251 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_chat_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/tv_main_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_main_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/main_thietlaptaikhoan"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/iv_chat_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_main_title">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_chat_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="@id/tv_main_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_main_title" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_main_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="52dp"
-            android:text="@string/main_thietlaptaikhoan"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/iv_chat_back"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_main_username"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_username"
-            android:drawablePadding="17dp"
-            android:paddingHorizontal="18dp"
-            android:paddingVertical="13dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_main_title"
-            tool:text="HuongNT" />
+            android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_main_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="19dp"
-            android:inputType="textPassword"
-            android:paddingHorizontal="18dp"
-            android:paddingVertical="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_main_username"
-            tool:text="12345677" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_main_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_username"
+                android:drawablePadding="17dp"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="13dp"
+                android:text="HuongNT"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_main_changepw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/background_main_button"
-            android:text="@string/main_doimatkhau"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_main_password" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_main_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="19dp"
+                android:inputType="textPassword"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="12dp"
+                android:text="12345677"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_main_username" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_main_userinformation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/main_thongtincanhan"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_main_changepw" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_main_changepw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/hover_button"
+                android:text="@string/main_doimatkhau"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_main_password" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_main_avatar"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/avatar"
-            app:civ_border_color="@color/border_avatar_light_blue"
-            app:civ_border_width="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_main_userinformation" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_main_backgroundcamera"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:background="@drawable/background_main_imageview"
-            app:layout_constraintBottom_toBottomOf="@id/iv_main_avatar"
-            app:layout_constraintEnd_toEndOf="@id/iv_main_avatar" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_main_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@id/iv_main_backgroundcamera"
-            app:layout_constraintEnd_toEndOf="@id/iv_main_backgroundcamera"
-            app:layout_constraintStart_toStartOf="@id/iv_main_backgroundcamera"
-            app:layout_constraintTop_toTopOf="@id/iv_main_backgroundcamera" />
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_main_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_username"
-            android:drawablePadding="17dp"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_main_avatar"
-            tool:text="Nguyễn Thu Hương" />
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_main_dateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_dateofbirth"
-            android:drawablePadding="17dp"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@id/edt_main_name"
-            tool:text="28 / 04 / 1986" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_main_gender"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_gender"
-            android:paddingVertical="12dp"
-            android:paddingStart="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_main_dateOfBirth" />
-
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="68dp"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_main_dateOfBirth">
-
-            <RadioButton
-                android:id="@+id/rb_main_male"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_main_userinformation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/light_blue"
-                android:text="@string/main_nam"
-                android:textStyle="bold" />
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/main_thongtincanhan"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_main_changepw" />
 
-            <RadioButton
-                android:id="@+id/rb_main_female"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_main_avatar"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/iv_avatar"
+                app:civ_border_color="@color/border_avatar_light_blue"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_userinformation" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_main_backgroundcamera"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/background_main_imageview"
+                app:layout_constraintBottom_toBottomOf="@id/iv_main_avatar"
+                app:layout_constraintEnd_toEndOf="@id/iv_main_avatar" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_main_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/light_blue"
-                android:text="@string/main_nu"
-                android:textStyle="bold" />
+                android:src="@drawable/ic_camera"
+                app:layout_constraintBottom_toBottomOf="@id/iv_main_backgroundcamera"
+                app:layout_constraintEnd_toEndOf="@id/iv_main_backgroundcamera"
+                app:layout_constraintStart_toStartOf="@id/iv_main_backgroundcamera"
+                app:layout_constraintTop_toTopOf="@id/iv_main_backgroundcamera" />
 
-            <RadioButton
-                android:id="@+id/rb_main_other"
-                android:layout_width="wrap_content"
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_main_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/light_blue"
-                android:text="@string/main_khac"
-                android:textStyle="bold" />
-        </RadioGroup>
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_username"
+                android:drawablePadding="17dp"
+                android:padding="12dp"
+                android:text="Nguyễn Thu Hương"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_main_avatar" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edt_main_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/background_main_edittext"
-            android:drawableStart="@drawable/ic_address"
-            android:drawablePadding="17dp"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_main_gender"
-            tool:text="Tầng 4, Tòa nhà H10, Số 2 ngõ 475, Thanh Xuân, Hà Nội" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_main_uppdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20.5dp"
-            android:layout_marginBottom="100dp"
-            android:background="@drawable/background_main_button"
-            android:backgroundTint="@color/light_blue"
-            android:text="@string/main_capnhat"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_main_address" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_main_dateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_dateofbirth"
+                android:drawablePadding="17dp"
+                android:padding="12dp"
+                android:text="28 / 04 / 1986"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_main_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_main_gender"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_gender"
+                android:paddingVertical="12dp"
+                android:paddingStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_main_dateOfBirth" />
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="68dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_main_gender">
+
+                <RadioButton
+                    android:id="@+id/rb_main_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/light_blue"
+                    android:text="@string/main_nam"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rb_main_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/light_blue"
+                    android:text="@string/main_nu"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rb_main_other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/light_blue"
+                    android:text="@string/main_khac"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_main_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_main_edittext"
+                android:drawableStart="@drawable/ic_address"
+                android:drawablePadding="17dp"
+                android:padding="12dp"
+                android:text="Tầng 4, Tòa nhà H10, Số 2 ngõ 475, Thanh Xuân, Hà Nội"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_gender" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_main_uppdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20.5dp"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/hover_button"
+                android:backgroundTint="@color/light_blue"
+                android:text="@string/main_capnhat"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_main_address" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
