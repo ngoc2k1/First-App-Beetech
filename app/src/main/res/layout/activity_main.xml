@@ -33,6 +33,7 @@
         android:background="@drawable/background_main_bottombar"
         app:itemIconTint="@color/ic_tab_clicked"
         app:itemTextColor="@color/ic_tab_clicked"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/main_menu" />
 
 </RelativeLayout>

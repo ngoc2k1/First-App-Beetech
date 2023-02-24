@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_item_receive_mess"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/background_main_edittext"
-    android:backgroundTint="@color/white"
-    android:paddingHorizontal="12dp"
-    android:paddingVertical="11dp"
-    android:text="Hello"
-    android:textColor="@color/black">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
+    android:background="@color/background">
 
-</androidx.appcompat.widget.AppCompatTextView>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_itemchat_avatar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/iv_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_itemchat_mess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_main_edittext"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
+        android:text="Hello"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/iv_itemchat_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_itemchat_avatar">
+
+    </androidx.appcompat.widget.AppCompatTextView>
+</androidx.constraintlayout.widget.ConstraintLayout>

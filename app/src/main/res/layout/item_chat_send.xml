@@ -11,12 +11,13 @@
         android:id="@+id/tv_item_send_mess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/background_main_icon"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="11dp"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
         android:text="Hello"
-        android:textColor="@color/white">
+        android:textColor="@color/white"
+        android:textSize="16sp">
 
     </androidx.appcompat.widget.AppCompatTextView>
 </LinearLayout>

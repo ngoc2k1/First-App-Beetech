@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_chat_back"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:layout_marginStart="24dp"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="@id/tv_main_title"
@@ -20,9 +20,9 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_main_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:layout_marginStart="74dp"
-        android:layout_marginTop="52dp"
+        android:gravity="center"
         android:text="@string/main_thietlaptaikhoan"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -44,15 +44,15 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_main_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="21dp"
                 android:background="@drawable/background_main_edittext"
                 android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="17dp"
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="13dp"
                 android:text="HuongNT"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,16 +61,17 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_main_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/background_main_edittext"
                 android:drawableStart="@drawable/ic_password"
-                android:drawablePadding="19dp"
+                android:drawablePadding="17dp"
                 android:inputType="textPassword"
                 android:paddingHorizontal="18dp"
-                android:paddingVertical="12dp"
+                android:paddingVertical="13dp"
                 android:text="12345677"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_main_username" />
@@ -78,12 +79,13 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_main_changepw"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="21dp"
                 android:background="@drawable/hover_button"
                 android:text="@string/main_doimatkhau"
                 android:textColor="@color/white"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_main_password" />
@@ -135,15 +137,17 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_main_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_main_edittext"
                 android:drawableStart="@drawable/ic_username"
                 android:drawablePadding="17dp"
-                android:padding="12dp"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="13dp"
                 android:text="Nguyễn Thu Hương"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_main_avatar" />
@@ -152,17 +156,18 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_main_dateOfBirth"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/background_main_edittext"
                 android:drawableStart="@drawable/ic_dateofbirth"
                 android:drawablePadding="17dp"
-                android:padding="12dp"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="13dp"
                 android:text="28 / 04 / 1986"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_main_name" />
 
@@ -174,8 +179,9 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/background_main_edittext"
                 android:drawableStart="@drawable/ic_gender"
-                android:paddingVertical="12dp"
-                android:paddingStart="20dp"
+                android:paddingVertical="13dp"
+                android:paddingStart="18dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_main_dateOfBirth" />
@@ -184,11 +190,11 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="84dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginEnd="68dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
+                app:layout_constraintBottom_toBottomOf="@id/tv_main_gender"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_main_gender">
@@ -200,6 +206,7 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/light_blue"
                     android:text="@string/main_nam"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -209,6 +216,7 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/light_blue"
                     android:text="@string/main_nu"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <RadioButton
@@ -218,8 +226,10 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/light_blue"
                     android:text="@string/main_khac"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </RadioGroup>
+
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_main_address"
@@ -228,30 +238,41 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/background_main_edittext"
-                android:drawableStart="@drawable/ic_address"
-                android:drawablePadding="17dp"
-                android:padding="12dp"
+                android:paddingVertical="16dp"
+                android:paddingStart="54dp"
+                android:paddingEnd="17dp"
                 android:text="Tầng 4, Tòa nhà H10, Số 2 ngõ 475, Thanh Xuân, Hà Nội"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_main_gender" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_main_iconaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_address"
+                app:layout_constraintStart_toStartOf="@id/edt_main_address"
+                app:layout_constraintTop_toTopOf="@id/edt_main_address" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_main_uppdate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20.5dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/hover_button"
-                android:backgroundTint="@color/light_blue"
                 android:text="@string/main_capnhat"
                 android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edt_main_address" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

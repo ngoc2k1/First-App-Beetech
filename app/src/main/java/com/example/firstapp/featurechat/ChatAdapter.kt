@@ -36,7 +36,7 @@ class ChatAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder.itemViewType == 0) {
             var userFeatureViewHolder = holder as ItemChatReceiveVH
-            userFeatureViewHolder.bindingReceive.tvItemReceiveMess.text =
+            userFeatureViewHolder.bindingReceive.tvItemchatMess.text =
                 listMessageChat[position].message
         } else {
             val userFeatureViewHolder = holder as ItemChatSendVH
