@@ -5,5 +5,5 @@
         android:endColor="@color/dark_yellow"
         android:startColor="@color/light_yellow"
         android:type="linear" />
-    <corners android:radius="23dp" />
+    <corners android:radius="22dp" />
 </shape>

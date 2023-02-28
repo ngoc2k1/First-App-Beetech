@@ -11,7 +11,7 @@
         android:id="@+id/tv_chat_informessage"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/light_blue"
+        android:background="@color/title_chat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,14 +31,14 @@
         android:layout_height="35dp"
         android:layout_marginStart="45dp"
         android:layout_marginBottom="6dp"
-        android:src="@drawable/iv_avatar"
+        android:src="@drawable/avatar"
         app:layout_constraintBottom_toBottomOf="@id/tv_chat_informessage"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_chat_nameClient"
         android:layout_width="0dp"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:gravity="center_vertical"
         android:text="Dr.Thân Mạnh Hùng"
@@ -74,9 +74,8 @@
         android:id="@+id/rv_chat_chattogether"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
         android:paddingHorizontal="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_chat_inforsend"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_chat_informessage" />
 
@@ -120,7 +119,7 @@
         app:layout_constraintTop_toTopOf="@id/tv_chat_inforsend" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_chat_picture"
+        android:id="@+id/iv_chat_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -137,19 +136,17 @@
         android:layout_marginStart="14dp"
         android:src="@drawable/ic_voice"
         app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsend"
-        app:layout_constraintStart_toEndOf="@id/iv_chat_picture"
+        app:layout_constraintStart_toEndOf="@id/iv_chat_gallery"
         app:layout_constraintTop_toTopOf="@id/tv_chat_inforsend" />
 
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_chat_inputuser"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginStart="14dp"
         android:background="@drawable/background_chat_edittext"
         android:hint="@string/chat_tinnhan"
-        android:maxHeight="60dp"
-        android:minHeight="30dp"
         android:paddingHorizontal="5dp"
         android:paddingTop="9dp"
         android:paddingBottom="7dp"

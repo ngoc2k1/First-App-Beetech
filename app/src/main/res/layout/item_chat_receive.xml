@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp">
+    android:layout_marginTop="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_itemchat_avatar"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/iv_avatar"
+        android:src="@drawable/avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,8 +25,19 @@
         android:text="Hello"
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/guideline_item_onepicture"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/iv_itemchat_avatar"
         app:layout_constraintTop_toTopOf="@id/iv_itemchat_avatar">
 
     </androidx.appcompat.widget.AppCompatTextView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_onepicture"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
