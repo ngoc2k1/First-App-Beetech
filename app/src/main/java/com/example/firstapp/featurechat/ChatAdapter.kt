@@ -15,7 +15,7 @@ import com.example.firstapp.databinding.ItemChatReceiveBinding
 import com.example.firstapp.databinding.ItemChatSendBinding
 
 enum class ChatAction(val original: Int) {
-    RECEIVE(0), SEND(1), RECEIVE_PHOTO(10), SEND_PHOTO(11)
+    RECEIVE(RECEIVE_TEXT), SEND(SEND_TEXT), RECEIVE_PHOTO(RECEIVE_PHOTOS), SEND_PHOTO(SEND_PHOTOS)
 }
 
 class ChatAdapter(
@@ -76,9 +76,6 @@ class ChatAdapter(
                     listMessageChat[position].message
             }
             ChatAction.RECEIVE_PHOTO.original -> {
-//                val userFeatureViewHolder = holder as ItemChatOnepictureReceiveVH
-//                Glide.with(context).load(R.drawable.avatar)
-//                    .into(userFeatureViewHolder.bindingReceivePhoto.ivItemOnepicture)
             }
             ChatAction.SEND_PHOTO.original -> {
                 val userFeatureViewHolder = holder as ItemChatOnepictureSendVH
@@ -99,13 +96,13 @@ class ChatAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (listMessageChat[position].isSend == 0) {
+        if (listMessageChat[position].isSend == RECEIVE_TEXT) {
             return ChatAction.RECEIVE.original
         }
-        if (listMessageChat[position].isSend == 1) {
+        if (listMessageChat[position].isSend == SEND_TEXT) {
             return ChatAction.SEND.original
         }
-        if (listMessageChat[position].isSendPhoto == 10) {
+        if (listMessageChat[position].isSendPhoto == RECEIVE_PHOTOS) {
             return ChatAction.RECEIVE_PHOTO.original
         }
         return ChatAction.SEND_PHOTO.original

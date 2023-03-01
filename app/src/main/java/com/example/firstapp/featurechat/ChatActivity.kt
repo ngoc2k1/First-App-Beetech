@@ -43,9 +43,14 @@ class ChatActivity : AppCompatActivity() {
         binding.ivChatSend.setOnClickListener {
             val myMessageChat = binding.edtChatInputuser.text.toString()
             if (myMessageChat.isNotEmpty()) {
-                val myChat = Chat(ChatAction.SEND.original, myMessageChat, 0, null)
+                val myChat = Chat(SEND_TEXT, myMessageChat, 0, null)
                 chatList.add(myChat)
-                val data = Chat(ChatAction.RECEIVE.original, "Xin chào bạn. Rất vui làm quen với bạn.", 0, null)
+                val data = Chat(
+                    RECEIVE_TEXT,
+                    "Xin chào bạn. Rất vui làm quen với bạn.",
+                    0,
+                    null
+                )
                 chatList.add(data)
                 chatAdapter.notifyDataSetChanged()
                 binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
@@ -65,7 +70,7 @@ class ChatActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == 1) {
             imageUri = data?.data
 
-            val myChat = Chat(3, "", ChatAction.SEND_PHOTO.original, imageUri)
+            val myChat = Chat(0, "", SEND_PHOTOS, imageUri)
             chatList.add(myChat)
             chatAdapter.notifyDataSetChanged()
             binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
