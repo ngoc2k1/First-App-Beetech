@@ -2,19 +2,22 @@ package com.example.firstapp.featurechat
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.R
 import com.example.firstapp.databinding.ActivityChatBinding
-import java.util.ArrayList
+import java.io.ByteArrayOutputStream
+
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
@@ -22,7 +25,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var mLinearLayout: LinearLayoutManager
 
-    var colum = arrayOf(
+    private var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
@@ -46,7 +49,9 @@ class ChatActivity : AppCompatActivity() {
         binding.ivChatGallery.setOnClickListener {
             openGallery()
         }
-
+        binding.ivChatCamera.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
         if (ActivityCompat.checkSelfPermission(
                 this, colum[0]
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -73,7 +78,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK && requestCode == 123) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_GALLERY) {
             val pictureList: ArrayList<Uri>? = ArrayList()
             if (data!!.clipData != null) {
                 val pictureCount = data.clipData!!.itemCount
@@ -81,16 +86,34 @@ class ChatActivity : AppCompatActivity() {
                     pictureList!!.add(data.clipData!!.getItemAt(i).uri)
                 }
                 chatList.add(Chat(0, "", 0, null, pictureList, SEND_MULTIPHOTOS))
-                chatAdapter.notifyDataSetChanged()
 
             } else if (data.data != null) {
                 val imageUri = data.data
                 val myChat = Chat(0, "", SEND_PHOTOS, imageUri, null, 0)
                 chatList.add(myChat)
-                chatAdapter.notifyDataSetChanged()
             }
+
             binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
+            chatAdapter.notifyDataSetChanged()
+
         }
+        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val myChat = Chat(
+                0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
+            )
+            chatList.add(myChat)
+            binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
+            chatAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
+        return Uri.parse(path.toString())
     }
 
     private fun openGallery() {
@@ -98,7 +121,7 @@ class ChatActivity : AppCompatActivity() {
         intent.type = "image/*"
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -115,5 +138,11 @@ class ChatActivity : AppCompatActivity() {
             binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
             binding.edtChatInputuser.text?.clear()
         }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun dispatchTakePictureIntent() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, REQUEST_CAMERA)
     }
 }
