@@ -22,11 +22,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var mLinearLayout: LinearLayoutManager
 
-
     var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     )
-
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +46,6 @@ class ChatActivity : AppCompatActivity() {
         binding.ivChatGallery.setOnClickListener {
             openGallery()
         }
-
 
         if (ActivityCompat.checkSelfPermission(
                 this, colum[0]
@@ -77,7 +74,7 @@ class ChatActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK && requestCode == 123) {
-            var pictureList: ArrayList<Uri>? = ArrayList()
+            val pictureList: ArrayList<Uri>? = ArrayList()
             if (data!!.clipData != null) {
                 val pictureCount = data.clipData!!.itemCount
                 for (i in 0 until pictureCount) {
@@ -91,8 +88,8 @@ class ChatActivity : AppCompatActivity() {
                 val myChat = Chat(0, "", SEND_PHOTOS, imageUri, null, 0)
                 chatList.add(myChat)
                 chatAdapter.notifyDataSetChanged()
-
             }
+            binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
         }
     }
 
@@ -104,6 +101,7 @@ class ChatActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun sendText() {
         val myMessageChat = binding.edtChatInputuser.text.toString()
         if (myMessageChat.isNotEmpty()) {
