@@ -1,21 +1,19 @@
 package com.example.firstapp.featurechat
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.firstapp.R
-import com.example.firstapp.databinding.ItemChatOnepictureReceiveBinding
-import com.example.firstapp.databinding.ItemChatOnepictureSendBinding
-import com.example.firstapp.databinding.ItemChatReceiveBinding
-import com.example.firstapp.databinding.ItemChatSendBinding
+import com.example.firstapp.PictureAdapterv2
+import com.example.firstapp.databinding.*
 
 enum class ChatAction(val original: Int) {
-    RECEIVE(RECEIVE_TEXT), SEND(SEND_TEXT), RECEIVE_PHOTO(RECEIVE_PHOTOS), SEND_PHOTO(SEND_PHOTOS)
+    RECEIVE(RECEIVE_TEXT), SEND(SEND_TEXT), RECEIVE_PHOTO(RECEIVE_PHOTOS), SEND_PHOTO(SEND_PHOTOS), SEND_MULTIPHOTO(
+        SEND_MULTIPHOTOS
+    )
 }
 
 class ChatAdapter(
@@ -38,6 +36,10 @@ class ChatAdapter(
         val bindingReceivePhoto: ItemChatOnepictureReceiveBinding
     ) : RecyclerView.ViewHolder(bindingReceivePhoto.root)
 
+    class ItemChatMultiPictureVH(
+        val bindingMultiPicture: ItemChatMultipictureSendBinding
+    ) : RecyclerView.ViewHolder(bindingMultiPicture.root)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == ChatAction.RECEIVE.original) return ItemChatReceiveVH(
             ItemChatReceiveBinding.inflate(
@@ -55,14 +57,21 @@ class ChatAdapter(
                     LayoutInflater.from(context), parent, false
                 )
             )
-        return ItemChatOnepictureSendVH(
-            ItemChatOnepictureSendBinding.inflate(
+        if (viewType == ChatAction.SEND_PHOTO.original)
+            return ItemChatOnepictureSendVH(
+                ItemChatOnepictureSendBinding.inflate(
+                    LayoutInflater.from(context), parent, false
+                )
+            )
+        return ItemChatMultiPictureVH(
+            ItemChatMultipictureSendBinding.inflate(
                 LayoutInflater.from(context), parent, false
             )
         )
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             ChatAction.RECEIVE.original -> {
@@ -87,6 +96,19 @@ class ChatAdapter(
                     )
                     .into(userFeatureViewHolder.bindingSendPhoto.ivItemOnepicture)
             }
+            ChatAction.SEND_MULTIPHOTO.original -> {
+                val userFeatureViewHolder = holder as ItemChatMultiPictureVH
+                val pictureAdapter =
+                    PictureAdapterv2(context, listMessageChat[position].picList ?: listOf())
+                userFeatureViewHolder.bindingMultiPicture.recycler.apply {
+                    adapter = pictureAdapter
+                    if (listMessageChat[position].picList!!.size > 2)
+                        layoutManager = GridLayoutManager(context, 3)
+                    else layoutManager = GridLayoutManager(context, 2)
+
+                }
+                pictureAdapter.notifyDataSetChanged()
+            }
         }
     }
 
@@ -105,6 +127,9 @@ class ChatAdapter(
         if (listMessageChat[position].isSendPhoto == RECEIVE_PHOTOS) {
             return ChatAction.RECEIVE_PHOTO.original
         }
-        return ChatAction.SEND_PHOTO.original
+        if (listMessageChat[position].isSendPhoto == SEND_PHOTOS) {
+            return ChatAction.SEND_PHOTO.original
+        }
+        return ChatAction.SEND_MULTIPHOTO.original
     }
 }

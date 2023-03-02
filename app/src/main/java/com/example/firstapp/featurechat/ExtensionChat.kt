@@ -15,3 +15,4 @@ const val SEND_TEXT = 1
 const val RECEIVE_TEXT = 2
 const val RECEIVE_PHOTOS = 3
 const val SEND_PHOTOS = 4
+const val SEND_MULTIPHOTOS = 5
