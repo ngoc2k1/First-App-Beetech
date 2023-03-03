@@ -1,5 +1,6 @@
 package com.example.firstapp.featurechat
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.firstapp.PictureAdapterv2
 import com.example.firstapp.databinding.*
+
 
 enum class ChatAction(val original: Int) {
     RECEIVE(RECEIVE_TEXT), SEND(SEND_TEXT), RECEIVE_PHOTO(RECEIVE_PHOTOS), SEND_PHOTO(SEND_PHOTOS), SEND_MULTIPHOTO(
@@ -102,16 +104,22 @@ class ChatAdapter(
                     PictureAdapterv2(context, listMessageChat[position].picList ?: listOf())
                 userFeatureViewHolder.bindingMultiPicture.recycler.apply {
                     adapter = pictureAdapter
-                    if (listMessageChat[position].picList!!.size > 2)
+
+                    if (listMessageChat[position].picList!!.size > 2) {
                         layoutManager = GridLayoutManager(context, 3)
-                    else layoutManager = GridLayoutManager(context, 2)
+                        val divider = GridSpacingItemDecoration(convertDpToPixel(1), 3)
+                        userFeatureViewHolder.bindingMultiPicture.recycler.addItemDecoration(divider)
+                    } else {
+                        layoutManager = GridLayoutManager(context, 2)
+                        val divider = GridSpacingItemDecoration(convertDpToPixel(1), 2)
+                        userFeatureViewHolder.bindingMultiPicture.recycler.addItemDecoration(divider)
+                    }
 
                 }
                 pictureAdapter.notifyDataSetChanged()
             }
         }
     }
-
 
     override fun getItemCount(): Int {
         return listMessageChat.size

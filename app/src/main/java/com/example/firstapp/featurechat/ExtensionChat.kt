@@ -17,5 +17,6 @@ const val RECEIVE_PHOTOS = 3
 const val SEND_PHOTOS = 4
 const val SEND_MULTIPHOTOS = 5
 
-const val REQUEST_GALLERY = 123
-const val REQUEST_CAMERA = 124
+fun convertDpToPixel(pixelValue: Int): Int {
+    return (16.0f * pixelValue + 0.5f).toInt()
+}

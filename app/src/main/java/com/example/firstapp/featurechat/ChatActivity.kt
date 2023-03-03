@@ -2,6 +2,7 @@ package com.example.firstapp.featurechat
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,8 +12,12 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.WindowManager
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.R
 import com.example.firstapp.databinding.ActivityChatBinding
@@ -24,6 +29,8 @@ class ChatActivity : AppCompatActivity() {
     private var chatList: ArrayList<Chat> = ArrayList()
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var mLinearLayout: LinearLayoutManager
+    private lateinit var galleryActivityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraActivityResultLauncher: ActivityResultLauncher<Intent>
 
     private var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
@@ -62,7 +69,44 @@ class ChatActivity : AppCompatActivity() {
                 requestPermissions(colum, 123)
             }
         }
+        galleryActivityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
 
+                val pictureList: ArrayList<Uri>? = ArrayList()
+                if (data!!.clipData != null) {
+                    val pictureCount = data.clipData!!.itemCount
+                    for (i in 0 until pictureCount) {
+                        pictureList!!.add(data.clipData!!.getItemAt(i).uri)
+                    }
+                    chatList.add(Chat(0, "", 0, null, pictureList, SEND_MULTIPHOTOS))
+
+                } else if (data.data != null) {
+                    val imageUri = data.data
+                    val myChat = Chat(0, "", SEND_PHOTOS, imageUri, null, 0)
+                    chatList.add(myChat)
+                }
+
+                binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
+                chatAdapter.notifyDataSetChanged()
+            }
+        }
+        cameraActivityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                val myChat = Chat(
+                    0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
+                )
+                chatList.add(myChat)
+                binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
+                chatAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun setColorActionBar() {
@@ -71,40 +115,6 @@ class ChatActivity : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = this@ChatActivity.resources.getColor(R.color.title_chat)
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK && requestCode == REQUEST_GALLERY) {
-            val pictureList: ArrayList<Uri>? = ArrayList()
-            if (data!!.clipData != null) {
-                val pictureCount = data.clipData!!.itemCount
-                for (i in 0 until pictureCount) {
-                    pictureList!!.add(data.clipData!!.getItemAt(i).uri)
-                }
-                chatList.add(Chat(0, "", 0, null, pictureList, SEND_MULTIPHOTOS))
-
-            } else if (data.data != null) {
-                val imageUri = data.data
-                val myChat = Chat(0, "", SEND_PHOTOS, imageUri, null, 0)
-                chatList.add(myChat)
-            }
-
-            binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
-            chatAdapter.notifyDataSetChanged()
-
-        }
-        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            val myChat = Chat(
-                0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
-            )
-            chatList.add(myChat)
-            binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
-            chatAdapter.notifyDataSetChanged()
         }
     }
 
@@ -117,11 +127,11 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY)
+        val galleryIntent = Intent()
+        galleryIntent.type = "image/*"
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        galleryIntent.action = Intent.ACTION_GET_CONTENT
+        galleryActivityResultLauncher.launch(galleryIntent)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -143,6 +153,6 @@ class ChatActivity : AppCompatActivity() {
     @SuppressLint("QueryPermissionsNeeded")
     private fun dispatchTakePictureIntent() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraIntent, REQUEST_CAMERA)
+        cameraActivityResultLauncher.launch(cameraIntent)
     }
 }
