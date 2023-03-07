@@ -1,6 +1,5 @@
 package com.example.firstapp.featurechat
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.firstapp.PictureAdapterv2
 import com.example.firstapp.databinding.*
 
 
@@ -101,7 +99,7 @@ class ChatAdapter(
             ChatAction.SEND_MULTIPHOTO.original -> {
                 val userFeatureViewHolder = holder as ItemChatMultiPictureVH
                 val pictureAdapter =
-                    PictureAdapterv2(context, listMessageChat[position].picList ?: listOf())
+                    PhotoAdapterv2(context, listMessageChat[position].picList ?: listOf())
                 userFeatureViewHolder.bindingMultiPicture.recycler.apply {
                     adapter = pictureAdapter
 

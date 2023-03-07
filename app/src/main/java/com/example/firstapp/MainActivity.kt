@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         loadFragment(TaiKhoanFragment())
         binding.bottomMainNavigate.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.hoso -> loadFragment(HoSoFragment())
                 R.id.taikhoan ->
                     loadFragment(TaiKhoanFragment())
             }
