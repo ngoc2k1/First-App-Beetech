@@ -23,7 +23,6 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.firstapp.MainActivity
 import com.example.firstapp.OnPhotoAdapterListener
 import com.example.firstapp.PhotoAdapter
 import com.example.firstapp.R
@@ -46,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
     private var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     )
+    var photoCount = 0
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,10 +69,10 @@ class ChatActivity : AppCompatActivity() {
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
 
         binding.ivChatGallery.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             openGallery()
             binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
             binding.tvChatShadowsheet.visibility = View.GONE
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         binding.ivChatClosesheet.setOnClickListener {
@@ -81,7 +81,6 @@ class ChatActivity : AppCompatActivity() {
         binding.ivChatBacksheet.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
-
         binding.ivChatSendsheet.setOnClickListener {
             getListPhotoClicked()
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
@@ -101,20 +100,25 @@ class ChatActivity : AppCompatActivity() {
                         binding.groupChatTopsheet.visibility = View.GONE
                         binding.groupChatInforsendsheet.visibility = View.VISIBLE
                         binding.groupChatBottomsheet.visibility = View.GONE
+
                     }
 
                     BottomSheetBehavior.STATE_EXPANDED -> {//max
-                        binding.tvChatSendphotoCount.visibility = View.GONE
                         binding.groupChatTopsheet.visibility = View.VISIBLE
                         binding.groupChatInforsendsheet.visibility = View.GONE
-                        binding.groupChatInforsend.visibility = View.GONE
                         binding.groupChatBottomsheet.visibility = View.VISIBLE
                         binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
+
+                        if (photoCount > 0) {
+                            binding.tvChatSendphotoCount.visibility = View.VISIBLE
+                            binding.tvChatSendphotoCount.text = photoCount.toString()
+                        } else {
+                            binding.tvChatSendphotoCount.visibility = View.GONE
+                        }
                     }
 
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         photoListClicked.clear()
-
                         binding.groupChatTopsheet.visibility = View.GONE
                         binding.groupChatBottomsheet.visibility = View.GONE
                         binding.coordinatorLayoutChatPicture.visibility = View.GONE
@@ -229,10 +233,10 @@ class ChatActivity : AppCompatActivity() {
         binding.rvChatPhotoList.adapter = photoAdapter
         photoAdapter.notifyDataSetChanged()
 
-        var photoCount = 0
+        photoCount = 0
         photoAdapter.onClickListener = object : OnPhotoAdapterListener {
             override fun pickPhoto(photo: Photo) {
-                var checkPhotoClicked = photo.isClicked
+                val checkPhotoClicked = photo.isClicked
                 if (checkPhotoClicked) {
                     photoCount -= 1
                     photo.isClicked = false
@@ -243,9 +247,12 @@ class ChatActivity : AppCompatActivity() {
                     photo.isClicked = true
                     photoListClicked.add(photo)
                 }
-                if (photoCount > 0) binding.tvChatSendphotoCount.visibility = View.VISIBLE
-                else binding.tvChatSendphotoCount.visibility = View.GONE
-                binding.tvChatSendphotoCount.text = photoCount.toString()
+                if (photoCount > 0) {
+                    binding.tvChatSendphotoCount.visibility = View.VISIBLE
+                    binding.tvChatSendphotoCount.text = photoCount.toString()
+                } else {
+                    binding.tvChatSendphotoCount.visibility = View.GONE
+                }
             }
         }
     }
@@ -295,5 +302,6 @@ class ChatActivity : AppCompatActivity() {
     private fun dispatchTakePictureIntent() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraActivityResultLauncher.launch(cameraIntent)
+        handleCameraActivityResult()
     }
 }
