@@ -185,7 +185,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chat_topsheet">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_chat_bottomsheet"
@@ -196,15 +196,44 @@
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_chat_topsheet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_chat_topsheet,iv_chat_closesheet" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_chat_topsheet"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="@string/chat_hinhanh"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_chat_sheet" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_chat_closesheet"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@id/tv_chat_topsheet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_chat_topsheet" />
+
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_chat_inforsendsheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_chat_shadowsheet,iv_chat_sendsheet,iv_chat_backsheet,tv_chat_inforsendsheet" />
+                app:constraint_referenced_ids="view_chat_sheet,tv_chat_shadowsheet,iv_chat_sendsheet,iv_chat_backsheet,tv_chat_inforsendsheet" />
 
             <View
                 android:id="@+id/tv_chat_shadowsheet"
                 android:layout_width="match_parent"
-                android:layout_height="14dp"
+                android:layout_height="10dp"
                 android:background="@drawable/shadow_main_bottombar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -221,7 +250,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_chat_sendsheet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginHorizontal="14dp"
                 android:src="@drawable/ic_sendphoto"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
@@ -232,7 +261,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_chat_backsheet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="14dp"
                 android:src="@drawable/ic_back_chat_sheet"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
@@ -244,7 +273,7 @@
                 android:layout_width="125dp"
                 android:layout_height="3dp"
                 android:background="@color/light_blue"
-                app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
+                app:layout_constraintBottom_toTopOf="@id/tv_chat_topsheet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_chat_inforsendsheet" />
@@ -253,18 +282,18 @@
                 android:id="@+id/rv_chat_photoList"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="3dp"
                 android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_chat_sheet"
+                app:layout_constraintTop_toBottomOf="@id/tv_chat_topsheet"
                 tools:listitem="@layout/item_chat_gallery" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_chat_bottomsheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:constraint_referenced_ids="tv_chat_bottomsheet,tv_chat_sendphoto_count,iv_chat_sendphoto" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -301,35 +330,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group_chat_topsheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="tv_chat_topsheet,iv_chat_closesheet" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_chat_topsheet"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/transparent"
-        android:gravity="center"
-        android:text="@string/chat_hinhanh"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_chat_closesheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:src="@drawable/ic_close"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tv_chat_topsheet"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_chat_topsheet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

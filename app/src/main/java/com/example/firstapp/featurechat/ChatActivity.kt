@@ -2,26 +2,22 @@ package com.example.firstapp.featurechat
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.TypedArray
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.OnPhotoAdapterListener
 import com.example.firstapp.PhotoAdapter
@@ -37,7 +33,6 @@ class ChatActivity : AppCompatActivity() {
     private var chatList: ArrayList<Chat> = ArrayList()
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var mLinearLayout: LinearLayoutManager
-    private lateinit var cameraActivityResultLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var photoAdapter: PhotoAdapter
     var photoListClicked = ArrayList<Photo>()
@@ -53,7 +48,7 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setColorActionBar()
+        setColorActionBar(R.color.title_chat)
         setPermission()
         setRecyclerViewChat()
 
@@ -63,21 +58,21 @@ class ChatActivity : AppCompatActivity() {
 
         binding.ivChatCamera.setOnClickListener {
             dispatchTakePictureIntent()
-            handleCameraActivityResult()
         }
 
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
 
         binding.ivChatGallery.setOnClickListener {
+            binding.tvChatTopsheet.visibility = View.GONE
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             openGallery()
             binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
-            binding.tvChatShadowsheet.visibility = View.GONE
         }
 
         binding.ivChatClosesheet.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
+
         binding.ivChatBacksheet.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
@@ -92,22 +87,26 @@ class ChatActivity : AppCompatActivity() {
 
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("Range")
             override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING && bottomSheet.top == 0) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.isHideable = false
+                    bottomSheetBehavior.skipCollapsed = false
+                }
+
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {//thu nhỏ đến chiều cao tối thiểu
                         binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
-                        binding.groupChatInforsend.visibility = View.GONE
-                        binding.groupChatTopsheet.visibility = View.GONE
-                        binding.groupChatInforsendsheet.visibility = View.VISIBLE
-                        binding.groupChatBottomsheet.visibility = View.GONE
-
+                        binding.tvChatShadowsheet.visibility = View.VISIBLE
                     }
 
                     BottomSheetBehavior.STATE_EXPANDED -> {//max
-                        binding.groupChatTopsheet.visibility = View.VISIBLE
-                        binding.groupChatInforsendsheet.visibility = View.GONE
-                        binding.groupChatBottomsheet.visibility = View.VISIBLE
                         binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
+                        binding.viewChatSheet.visibility = View.GONE
+                        binding.tvChatShadowsheet.visibility = View.GONE
 
                         if (photoCount > 0) {
                             binding.tvChatSendphotoCount.visibility = View.VISIBLE
@@ -119,21 +118,46 @@ class ChatActivity : AppCompatActivity() {
 
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         photoListClicked.clear()
-                        binding.groupChatTopsheet.visibility = View.GONE
-                        binding.groupChatBottomsheet.visibility = View.GONE
                         binding.coordinatorLayoutChatPicture.visibility = View.GONE
-                        binding.groupChatInforsend.visibility = View.VISIBLE
                     }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {}
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {}
+                    BottomSheetBehavior.STATE_SETTLING -> {}
                 }
             }
 
+            @SuppressLint("Range")
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                var actionBarHeight = 0
+                val styledAttributes: TypedArray = applicationContext.theme
+                    .obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+                actionBarHeight = styledAttributes.getDimension(0, 0f).toInt()
+                styledAttributes.recycle()
+
+                var slideOff = slideOffset
+                if (slideOff < 0) {
+                    slideOff = 0f
+                }
+                val params = binding.tvChatTopsheet.layoutParams
+                params.height = (actionBarHeight * slideOff).toInt()
+                binding.tvChatTopsheet.layoutParams = params
+                if (params.height == 0) {
+                    binding.tvChatShadowsheet.visibility = View.VISIBLE
+                    binding.tvChatTopsheet.visibility = View.GONE
+                } else {
+                    setColorActionBar(R.color.transparent)
+                    binding.tvChatTopsheet.visibility = View.VISIBLE
+                }
+
+                val paramsLine = binding.tvChatInforsendsheet.layoutParams
+                paramsLine.height = (120 * (1 - slideOff)).toInt()
+                binding.tvChatInforsendsheet.layoutParams = paramsLine
+                if (paramsLine.height == 0) {
+                    binding.tvChatInforsendsheet.visibility = View.GONE
+                } else {
+                    binding.viewChatSheet.visibility = View.VISIBLE
+                    binding.tvChatInforsendsheet.visibility = View.VISIBLE
+                }
             }
         })
     }
@@ -156,24 +180,6 @@ class ChatActivity : AppCompatActivity() {
         chatAdapter.notifyDataSetChanged()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun handleCameraActivityResult() {
-        cameraActivityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                val imageBitmap = data?.extras?.get("data") as Bitmap
-                val myChat = Chat(
-                    0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
-                )
-                chatList.add(myChat)
-                binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
-                chatAdapter.notifyDataSetChanged()
-            }
-        }
-    }
-
     private fun setRecyclerViewChat() {
         chatAdapter = ChatAdapter(this@ChatActivity, chatList)
         mLinearLayout = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -182,7 +188,7 @@ class ChatActivity : AppCompatActivity() {
         binding.rvChatChattogether.adapter = chatAdapter
     }
 
-    private fun setColorActionBar() {
+    private fun setColorActionBar(color: Int) {
         if (Build.VERSION.SDK_INT >= 21) {
             val window = this@ChatActivity.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -224,8 +230,7 @@ class ChatActivity : AppCompatActivity() {
         val mPhotoList = ArrayList<Photo>()
         for (element in photoList) {
             val photo = Photo(
-                element,
-                false
+                element, false
             )
             mPhotoList.add(photo)
         }
@@ -301,7 +306,21 @@ class ChatActivity : AppCompatActivity() {
     @SuppressLint("QueryPermissionsNeeded")
     private fun dispatchTakePictureIntent() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraActivityResultLauncher.launch(cameraIntent)
-        handleCameraActivityResult()
+        startActivityForResult(cameraIntent, 123)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 123 && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val myChat = Chat(
+                0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
+            )
+            chatList.add(myChat)
+            binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)
+            chatAdapter.notifyDataSetChanged()
+        }
     }
 }

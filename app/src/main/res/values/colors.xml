@@ -8,9 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="blacksheet">#FF000000</color>
     <color name="transparent">#80000000</color>
-
-    android:background="@android:color/transparent"
-
+    <color name="background_detail">#000000DB</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
     <color name="light_yellow">#F0C42E</color>
