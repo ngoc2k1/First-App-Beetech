@@ -1,6 +1,7 @@
 package com.example.firstapp.featurechat
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
@@ -21,6 +22,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.OnPhotoAdapterListener
@@ -53,6 +56,7 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setEdittextUsableWhenFullScreen()
         setColorActionBar()
         setPermission()
         setRecyclerViewChat()
@@ -176,6 +180,19 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setEdittextUsableWhenFullScreen() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.viewChatParent) { v, insets ->
+            val animator =
+                ValueAnimator.ofInt(0, insets.getInsets(WindowInsetsCompat.Type.ime()).bottom)
+            animator.addUpdateListener { valueAnimator ->
+                v.setPadding(0, 0, 0, valueAnimator.animatedValue as? Int ?: 0)
+            }
+            animator.duration = 200
+            animator.start()
+            insets
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
