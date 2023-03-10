@@ -105,11 +105,11 @@ class ChatAdapter(
 
                     if (listMessageChat[position].picList!!.size > 2) {
                         layoutManager = GridLayoutManager(context, 3)
-                        val divider = GridSpacingItemDecoration(convertDpToPixel(1), 3)
+                        val divider = GridSpacingItemDecoration(convertDpToPixel(context,3), 3)
                         userFeatureViewHolder.bindingMultiPicture.recycler.addItemDecoration(divider)
                     } else {
                         layoutManager = GridLayoutManager(context, 2)
-                        val divider = GridSpacingItemDecoration(convertDpToPixel(1), 2)
+                        val divider = GridSpacingItemDecoration(convertDpToPixel(context,3), 2)
                         userFeatureViewHolder.bindingMultiPicture.recycler.addItemDecoration(divider)
                     }
 

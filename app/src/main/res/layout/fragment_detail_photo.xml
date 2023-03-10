@@ -59,4 +59,37 @@
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@id/tv_chat_topsheet"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_chat_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:src="@drawable/ic_pick_detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_chat_bottomsheet" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_chat_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Chọn"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_chat_pick"
+        app:layout_constraintStart_toEndOf="@id/iv_chat_pick"
+        app:layout_constraintTop_toTopOf="@id/iv_chat_pick" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_chat_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:src="@drawable/ic_sendphoto"
+        app:layout_constraintBottom_toBottomOf="@id/iv_chat_pick"
+        app:layout_constraintStart_toEndOf="@id/tv_chat_pick"
+        app:layout_constraintTop_toTopOf="@id/iv_chat_pick" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

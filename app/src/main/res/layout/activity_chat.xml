@@ -18,7 +18,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_chat_informessage"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="88dp"
         android:background="@color/title_chat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,9 @@
         android:id="@+id/iv_chat_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="10dp"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="14dp"
         android:src="@drawable/ic_back_chat"
         app:layout_constraintBottom_toBottomOf="@id/iv_chat_avatarClient"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +64,8 @@
         android:id="@+id/iv_chat_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="59dp"
+        android:layout_marginEnd="45dp"
+        android:padding="14dp"
         android:src="@drawable/ic_call"
         app:layout_constraintBottom_toBottomOf="@id/iv_chat_avatarClient"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,12 +75,56 @@
         android:id="@+id/iv_chat_callVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:padding="14dp"
         android:src="@drawable/ic_callvideo"
         app:layout_constraintBottom_toBottomOf="@id/iv_chat_avatarClient"
         app:layout_constraintStart_toEndOf="@id/iv_chat_call"
         app:layout_constraintTop_toTopOf="@id/iv_chat_avatarClient" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_chat_inforsendsheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <View
+            android:id="@+id/tv_chat_shadowsheet"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/shadow_main_bottombar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_chat_inforsendsheet"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/background_main_bottombar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_shadowsheet" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_chat_backsheet"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="14dp"
+            android:paddingHorizontal="15dp"
+            android:src="@drawable/ic_back_chat_sheet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_chat_sendsheet"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="14dp"
+            android:paddingHorizontal="15dp"
+            android:src="@drawable/ic_sendphoto"
+            app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_chat_inforsendsheet" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_chat_inforsend"
@@ -109,7 +156,9 @@
         android:id="@+id/iv_chat_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="13dp"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="14dp"
         android:src="@drawable/ic_closewith"
         app:layout_constraintBottom_toBottomOf="@id/edt_chat_inputuser"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,8 +168,9 @@
         android:id="@+id/iv_chat_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
         android:backgroundTintMode="@color/light_blue"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="14dp"
         android:src="@drawable/ic_camera_chat"
         app:layout_constraintBottom_toBottomOf="@id/edt_chat_inputuser"
         app:layout_constraintStart_toEndOf="@id/iv_chat_close"
@@ -130,7 +180,8 @@
         android:id="@+id/iv_chat_gallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="14dp"
         android:src="@drawable/ic_picture"
         app:layout_constraintBottom_toBottomOf="@id/edt_chat_inputuser"
         app:layout_constraintStart_toEndOf="@id/iv_chat_camera"
@@ -141,7 +192,8 @@
         android:id="@+id/iv_chat_voice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="14dp"
         android:src="@drawable/ic_voice"
         app:layout_constraintBottom_toBottomOf="@id/edt_chat_inputuser"
         app:layout_constraintStart_toEndOf="@id/iv_chat_gallery"
@@ -170,12 +222,14 @@
         android:id="@+id/iv_chat_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="14dp"
+        android:layout_marginHorizontal="4dp"
+        android:padding="10dp"
         android:src="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="@id/edt_chat_inputuser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/edt_chat_inputuser"
         app:layout_constraintTop_toTopOf="@id/edt_chat_inputuser" />
+
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout_chat_picture"
@@ -192,8 +246,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:behavior_hideable="true"
-            app:behavior_peekHeight="300dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
+
+
+            <View
+                android:id="@+id/view_chat_containview"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_chat_sheet"
+                android:layout_width="100dp"
+                android:layout_height="3dp"
+                android:background="@color/light_blue"
+                app:layout_constraintBottom_toBottomOf="@id/view_chat_containview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view_chat_containview" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_chat_topsheet"
@@ -204,86 +277,40 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_chat_topsheet"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="88dp"
                 android:background="@color/transparent"
-                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_chat_containview" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_chat_hinhanh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/chat_hinhanh"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_chat_closesheet"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_chat_sheet" />
-
+                app:layout_constraintTop_toTopOf="@id/iv_chat_closesheet" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_chat_closesheet"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="14dp"
                 android:src="@drawable/ic_close"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chat_topsheet"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_chat_topsheet" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_chat_inforsendsheet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="view_chat_sheet,tv_chat_shadowsheet,iv_chat_sendsheet,iv_chat_backsheet,tv_chat_inforsendsheet" />
-
-            <View
-                android:id="@+id/tv_chat_shadowsheet"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@drawable/shadow_main_bottombar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_chat_inforsendsheet"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/background_main_bottombar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_chat_shadowsheet" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_chat_sendsheet"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="14dp"
-                android:src="@drawable/ic_sendphoto"
-                app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_chat_inforsendsheet" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_chat_backsheet"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="14dp"
-                android:src="@drawable/ic_back_chat_sheet"
-                app:layout_constraintBottom_toBottomOf="@id/tv_chat_inforsendsheet"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_chat_inforsendsheet" />
-
-            <View
-                android:id="@+id/view_chat_sheet"
-                android:layout_width="125dp"
-                android:layout_height="3dp"
-                android:background="@color/light_blue"
-                app:layout_constraintBottom_toTopOf="@id/tv_chat_topsheet"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_chat_inforsendsheet" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_chat_photoList"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="3dp"
                 android:background="@color/white"
+                android:paddingTop="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -294,12 +321,12 @@
                 android:id="@+id/group_chat_bottomsheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="tv_chat_bottomsheet,tv_chat_sendphoto_count,iv_chat_sendphoto" />
+                app:constraint_referenced_ids="tv_chat_bottomsheet,tv_chat_sendphoto_count,bt_chat_sendphoto" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_chat_bottomsheet"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="88dp"
                 android:background="@color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -313,22 +340,23 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="@id/iv_chat_sendphoto"
-                app:layout_constraintStart_toEndOf="@id/iv_chat_sendphoto"
-                app:layout_constraintTop_toTopOf="@id/iv_chat_sendphoto"
+                app:layout_constraintEnd_toEndOf="@id/bt_chat_sendphoto"
+                app:layout_constraintStart_toEndOf="@id/bt_chat_sendphoto"
+                app:layout_constraintTop_toTopOf="@id/bt_chat_sendphoto"
                 tools:ignore="SmallSp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_chat_sendphoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sendphoto"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_chat_sendphoto"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_send"
+                android:enabled="false"
+                android:padding="20dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_chat_bottomsheet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_chat_bottomsheet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

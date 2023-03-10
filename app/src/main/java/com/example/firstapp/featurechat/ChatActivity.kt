@@ -13,10 +13,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.OnPhotoAdapterListener
@@ -40,6 +44,7 @@ class ChatActivity : AppCompatActivity() {
     private var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     )
+
     var photoCount = 0
 
     @SuppressLint("NotifyDataSetChanged")
@@ -48,7 +53,7 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setColorActionBar(R.color.title_chat)
+        setColorActionBar()
         setPermission()
         setRecyclerViewChat()
 
@@ -60,59 +65,76 @@ class ChatActivity : AppCompatActivity() {
             dispatchTakePictureIntent()
         }
 
-        val bottomSheetBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
+        val bottomSheetGalleryBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+
+        val peekHeight = displayMetrics.heightPixels * 2 / 5
+        bottomSheetGalleryBehavior.peekHeight = peekHeight
 
         binding.ivChatGallery.setOnClickListener {
             binding.tvChatTopsheet.visibility = View.GONE
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetGalleryBehavior.isHideable = false
             openGallery()
             binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
+            binding.clChatInforsendsheet.visibility = View.VISIBLE
+            val param = binding.clChatInforsendsheet.layoutParams as MarginLayoutParams
+            param.setMargins(
+                0,
+                0,
+                0,
+                this@ChatActivity.resources.displayMetrics.heightPixels * 2 / 5
+            )
+            binding.clChatInforsendsheet.layoutParams = param
         }
 
         binding.ivChatClosesheet.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetGalleryBehavior.isHideable = true
+            binding.clChatInforsendsheet.visibility = View.GONE
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
         binding.ivChatBacksheet.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetGalleryBehavior.isHideable = true
+            binding.clChatInforsendsheet.visibility = View.GONE
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
         binding.ivChatSendsheet.setOnClickListener {
+            bottomSheetGalleryBehavior.isHideable = true
+            binding.clChatInforsendsheet.visibility = View.GONE
             getListPhotoClicked()
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
-        binding.ivChatSendphoto.setOnClickListener {
+        binding.btChatSendphoto.setOnClickListener {
+            bottomSheetGalleryBehavior.isHideable = true
+            binding.clChatInforsendsheet.visibility = View.GONE
             getListPhotoClicked()
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object :
+        bottomSheetGalleryBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             @SuppressLint("Range")
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_DRAGGING && bottomSheet.top == 0) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.isHideable = false
-                    bottomSheetBehavior.skipCollapsed = false
-                }
 
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {//thu nhỏ đến chiều cao tối thiểu
                         binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
-                        binding.tvChatShadowsheet.visibility = View.VISIBLE
                     }
 
                     BottomSheetBehavior.STATE_EXPANDED -> {//max
                         binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
-                        binding.viewChatSheet.visibility = View.GONE
-                        binding.tvChatShadowsheet.visibility = View.GONE
 
                         if (photoCount > 0) {
                             binding.tvChatSendphotoCount.visibility = View.VISIBLE
                             binding.tvChatSendphotoCount.text = photoCount.toString()
+                            binding.btChatSendphoto.isEnabled = true
                         } else {
                             binding.tvChatSendphotoCount.visibility = View.GONE
+                            binding.btChatSendphoto.isEnabled = false
                         }
                     }
 
@@ -128,35 +150,29 @@ class ChatActivity : AppCompatActivity() {
 
             @SuppressLint("Range")
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                var actionBarHeight = 0
-                val styledAttributes: TypedArray = applicationContext.theme
-                    .obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
-                actionBarHeight = styledAttributes.getDimension(0, 0f).toInt()
-                styledAttributes.recycle()
 
                 var slideOff = slideOffset
                 if (slideOff < 0) {
                     slideOff = 0f
                 }
                 val params = binding.tvChatTopsheet.layoutParams
-                params.height = (actionBarHeight * slideOff).toInt()
+                params.height = (convertDpToPixel(this@ChatActivity, 88) * slideOff).toInt()
                 binding.tvChatTopsheet.layoutParams = params
                 if (params.height == 0) {
-                    binding.tvChatShadowsheet.visibility = View.VISIBLE
                     binding.tvChatTopsheet.visibility = View.GONE
                 } else {
-                    setColorActionBar(R.color.transparent)
                     binding.tvChatTopsheet.visibility = View.VISIBLE
                 }
 
-                val paramsLine = binding.tvChatInforsendsheet.layoutParams
-                paramsLine.height = (120 * (1 - slideOff)).toInt()
-                binding.tvChatInforsendsheet.layoutParams = paramsLine
+                val paramsLine = binding.viewChatContainview.layoutParams
+                paramsLine.height =
+                    (convertDpToPixel(this@ChatActivity, 20) * (1 - slideOff)).toInt()
+                binding.viewChatContainview.layoutParams = paramsLine
                 if (paramsLine.height == 0) {
-                    binding.tvChatInforsendsheet.visibility = View.GONE
+                    binding.viewChatContainview.visibility = View.GONE
                 } else {
                     binding.viewChatSheet.visibility = View.VISIBLE
-                    binding.tvChatInforsendsheet.visibility = View.VISIBLE
+                    binding.viewChatContainview.visibility = View.VISIBLE
                 }
             }
         })
@@ -182,26 +198,27 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setRecyclerViewChat() {
         chatAdapter = ChatAdapter(this@ChatActivity, chatList)
-        mLinearLayout = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mLinearLayout = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         mLinearLayout.stackFromEnd = true
         binding.rvChatChattogether.layoutManager = mLinearLayout
         binding.rvChatChattogether.adapter = chatAdapter
     }
 
-    private fun setColorActionBar(color: Int) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            val window = this@ChatActivity.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = this@ChatActivity.resources.getColor(R.color.title_chat)
+    private fun setColorActionBar() {
+        window.apply {
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            this@ChatActivity.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+            statusBarColor = Color.TRANSPARENT
         }
     }
 
     private fun setPermission() {
         if (ActivityCompat.checkSelfPermission(
-                this, colum[0]
+                this@ChatActivity, colum[0]
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, colum[1]
+                this@ChatActivity, colum[1]
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -221,9 +238,9 @@ class ChatActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun openGallery() {
 
-        val layoutManager = GridLayoutManager(this, 3)
+        val layoutManager = GridLayoutManager(this@ChatActivity, 3)
         binding.rvChatPhotoList.layoutManager = layoutManager
-        val divider = GridSpacingItemDecoration(convertDpToPixel(1), 3)
+        val divider = GridSpacingItemDecoration(convertDpToPixel(this@ChatActivity, 1), 3)
         binding.rvChatPhotoList.addItemDecoration(divider)
 
         val photoList = getAllImagesFromDevice(this)
@@ -254,8 +271,10 @@ class ChatActivity : AppCompatActivity() {
                 }
                 if (photoCount > 0) {
                     binding.tvChatSendphotoCount.visibility = View.VISIBLE
+                    binding.btChatSendphoto.isEnabled = true
                     binding.tvChatSendphotoCount.text = photoCount.toString()
                 } else {
+                    binding.btChatSendphoto.isEnabled = false
                     binding.tvChatSendphotoCount.visibility = View.GONE
                 }
             }
@@ -316,7 +335,7 @@ class ChatActivity : AppCompatActivity() {
         if (requestCode == 123 && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             val myChat = Chat(
-                0, "", SEND_PHOTOS, getImageUriFromBitmap(this, imageBitmap), null, 0
+                0, "", SEND_PHOTOS, getImageUriFromBitmap(this@ChatActivity, imageBitmap), null, 0
             )
             chatList.add(myChat)
             binding.rvChatChattogether.smoothScrollToPosition(chatAdapter.itemCount)

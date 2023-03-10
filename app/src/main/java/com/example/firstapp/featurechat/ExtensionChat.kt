@@ -1,7 +1,6 @@
 package com.example.firstapp.featurechat
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 
@@ -17,6 +16,8 @@ const val RECEIVE_PHOTOS = 3
 const val SEND_PHOTOS = 4
 const val SEND_MULTIPHOTOS = 5
 
-fun convertDpToPixel(pixelValue: Int): Int {
-    return (16.0f * pixelValue + 0.5f).toInt()
+fun convertDpToPixel(context: Context, dp: Int): Int {
+    val metrics = context.resources.displayMetrics
+    val px = dp * (metrics.densityDpi / 160f)
+    return px.toInt()
 }
