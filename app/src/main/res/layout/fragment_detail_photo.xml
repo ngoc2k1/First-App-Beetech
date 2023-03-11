@@ -26,8 +26,9 @@
         android:id="@+id/iv_chat_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/avatar"
         android:orientation="horizontal"
+        android:src="@drawable/avatar"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
