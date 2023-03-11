@@ -7,7 +7,6 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -16,19 +15,16 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firstapp.OnPhotoAdapterListener
 import com.example.firstapp.PhotoAdapter
-import com.example.firstapp.R
 import com.example.firstapp.databinding.ActivityChatBinding
 import com.example.firstapp.featurechat.photo.Photo
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -47,7 +43,7 @@ class ChatActivity : AppCompatActivity() {
     private var colum = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
     )
-
+    private lateinit var bottomSheetGalleryBehavior: BottomSheetBehavior<View>
     var photoCount = 0
 
     @SuppressLint("NotifyDataSetChanged")
@@ -69,7 +65,7 @@ class ChatActivity : AppCompatActivity() {
             dispatchTakePictureIntent()
         }
 
-        val bottomSheetGalleryBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
+        bottomSheetGalleryBehavior = BottomSheetBehavior.from(binding.clChatBottomsheet)
 
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -84,39 +80,29 @@ class ChatActivity : AppCompatActivity() {
             bottomSheetGalleryBehavior.isHideable = false
             openGallery()
             binding.coordinatorLayoutChatPicture.visibility = View.VISIBLE
+            binding.tvChatSendphotoCount.visibility = View.GONE
             binding.clChatInforsendsheet.visibility = View.VISIBLE
+
             val param = binding.clChatInforsendsheet.layoutParams as MarginLayoutParams
-            param.setMargins(
-                0,
-                0,
-                0,
-                this@ChatActivity.resources.displayMetrics.heightPixels * 2 / 5
-            )
+            param.bottomMargin = peekHeight
             binding.clChatInforsendsheet.layoutParams = param
         }
 
         binding.ivChatClosesheet.setOnClickListener {
-            bottomSheetGalleryBehavior.isHideable = true
-            binding.clChatInforsendsheet.visibility = View.GONE
-            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            setHiddenBottomSheet()
         }
 
         binding.ivChatBacksheet.setOnClickListener {
-            bottomSheetGalleryBehavior.isHideable = true
-            binding.clChatInforsendsheet.visibility = View.GONE
-            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            setHiddenBottomSheet()
         }
         binding.ivChatSendsheet.setOnClickListener {
-            bottomSheetGalleryBehavior.isHideable = true
-            binding.clChatInforsendsheet.visibility = View.GONE
+            setHiddenBottomSheet()
             getListPhotoClicked()
-            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
         }
         binding.btChatSendphoto.setOnClickListener {
-            bottomSheetGalleryBehavior.isHideable = true
-            binding.clChatInforsendsheet.visibility = View.GONE
+            setHiddenBottomSheet()
             getListPhotoClicked()
-            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
         bottomSheetGalleryBehavior.addBottomSheetCallback(object :
@@ -180,6 +166,24 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setHiddenBottomSheet() {
+        bottomSheetGalleryBehavior.isHideable = true
+        binding.clChatInforsendsheet.visibility = View.GONE
+        bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        binding.coordinatorLayoutChatPicture.visibility = View.GONE
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (bottomSheetGalleryBehavior.state == BottomSheetBehavior.STATE_COLLAPSED || bottomSheetGalleryBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetGalleryBehavior.isHideable = true
+            binding.clChatInforsendsheet.visibility = View.GONE
+            bottomSheetGalleryBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun setEdittextUsableWhenFullScreen() {
