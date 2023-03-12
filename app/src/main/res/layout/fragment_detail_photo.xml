@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
-        android:src="@drawable/ic_sendphoto"
+        android:src="@drawable/ic_sendphoto_collapse"
         app:layout_constraintBottom_toBottomOf="@id/iv_chat_pick"
         app:layout_constraintStart_toEndOf="@id/tv_chat_pick"
         app:layout_constraintTop_toTopOf="@id/iv_chat_pick" />

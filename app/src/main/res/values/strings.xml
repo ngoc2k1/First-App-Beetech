@@ -16,4 +16,11 @@
     <string name="chat_hinhanh">Hình ảnh</string>
     <string name="login_dangkitaikhoan"><u>Đăng ký tài khoản</u></string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_dangnhap">ĐĂNG NHẬP</string>
+    <string name="login_quenmatkhau">Quên mật khẩu</string>
+    <string name="login_hoacdangnhapqua">Hoặc đăng nhập qua:</string>
+    <string name="login_dangnhapvoifacebook">Đăng nhập với Facebook</string>
+    <string name="login_dangnhapvoiapple">Đăng nhập với Apple</string>
+    <string name="login_dangnhapvoigoogle">Đăng nhập với Google</string>
+    <string name="login_dangnhapvoizalo">Đăng nhập với Zalo</string>
 </resources>
