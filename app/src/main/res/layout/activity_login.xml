@@ -9,15 +9,26 @@
     tools:context=".featureauthen.LoginActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_login_logomedda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:src="@drawable/ic_logo_medda_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_login_username"
         android:layout_width="46dp"
         android:layout_height="43dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/background_login_icon"
         android:paddingHorizontal="13dp"
         android:paddingVertical="12dp"
         android:src="@drawable/ic_username_account"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/iv_login_logomedda" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_login_username"
