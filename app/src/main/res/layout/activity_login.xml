@@ -41,7 +41,7 @@
         android:paddingTop="14dp"
         android:paddingEnd="13dp"
         android:paddingBottom="13dp"
-        android:text="HuongNT"
+        android:text="demo1@example.com"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -64,7 +64,6 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_login_password"
         android:layout_width="0dp"
-
         android:layout_height="43dp"
         android:background="@drawable/background_login_edittext"
         android:drawableEnd="@drawable/ic_eye"
@@ -74,7 +73,7 @@
         android:paddingTop="14dp"
         android:paddingEnd="13dp"
         android:paddingBottom="13dp"
-        android:text="HuongNT"
+        android:text="Abcd!234"
         android:textColor="@color/black"
         android:textSize="016sp"
         android:textStyle="bold"
