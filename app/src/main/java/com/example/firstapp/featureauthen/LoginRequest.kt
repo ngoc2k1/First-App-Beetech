@@ -1,8 +1,13 @@
 package com.example.firstapp.featureauthen
 
+import com.google.gson.annotations.SerializedName
 data class LoginRequest(
-    val username: String,
-    val password: String,
-    val device_token: String,
-    val device: Int
+    @SerializedName("username")
+    var username: String,
+    @SerializedName("password")
+    var password: String,
+    @SerializedName("device_token")
+    var deviceToken: String,
+    @SerializedName("device")
+    var device: Int
 )

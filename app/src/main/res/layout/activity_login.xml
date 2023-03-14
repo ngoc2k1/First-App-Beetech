@@ -37,17 +37,19 @@
         android:background="@drawable/background_login_edittext"
         android:drawableEnd="@drawable/ic_username_login"
         android:drawablePadding="11dp"
+        android:hint="Email hoặc Số điện thoại"
         android:paddingStart="11dp"
         android:paddingTop="14dp"
         android:paddingEnd="13dp"
         android:paddingBottom="13dp"
         android:text="demo1@example.com"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_login_username"
         app:layout_constraintTop_toTopOf="@id/iv_login_username" />
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_login_passowrd"
@@ -61,25 +63,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_login_username" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt_login_password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinputlayout_login_password1"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:background="@drawable/background_login_edittext"
-        android:drawableEnd="@drawable/ic_eye"
-        android:drawablePadding="11dp"
-        android:inputType="textPassword"
-        android:paddingStart="11dp"
-        android:paddingTop="14dp"
-        android:paddingEnd="13dp"
-        android:paddingBottom="13dp"
-        android:text="Abcd!234"
-        android:textColor="@color/black"
-        android:textSize="016sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_login_passowrd"
-        app:layout_constraintTop_toTopOf="@id/iv_login_passowrd" />
+        app:layout_constraintTop_toTopOf="@id/iv_login_passowrd"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:text="Abcd!234"
+            android:background="@drawable/background_login_edittext"
+            android:paddingStart="11dp"
+            android:paddingEnd="13dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_login_register"
