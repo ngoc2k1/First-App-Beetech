@@ -60,7 +60,15 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onError(throwable: Throwable) {
                         loadingDialog.dismiss()
-                        Log.d("error", "onError: "+  throwable.getErrorBody().errorMessage.toString(),)
+                        Toast.makeText(
+                            this@LoginActivity,
+                            throwable.getErrorBody().errorMessage.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d(
+                            "error",
+                            "onError: " + throwable.getErrorBody().errorMessage.toString()
+                        )
                     }
 
                     override fun onComplete() {
