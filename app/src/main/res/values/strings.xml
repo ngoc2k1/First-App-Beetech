@@ -23,4 +23,5 @@
     <string name="login_dangnhapvoiapple">Đăng nhập với Apple</string>
     <string name="login_dangnhapvoigoogle">Đăng nhập với Google</string>
     <string name="login_dangnhapvoizalo">Đăng nhập với Zalo</string>
+    <string name="login_matkhau">Mật khẩu</string>
 </resources>

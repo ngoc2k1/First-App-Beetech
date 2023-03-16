@@ -1,27 +1,25 @@
 package com.example.firstapp.featureauthen
 
 import android.app.ProgressDialog
-import android.app.ProgressDialog.show
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
+import android.text.InputType.*
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firstapp.databinding.ActivityLoginBinding
 import com.example.firstapp.featurechat.ChatActivity
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
-import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
@@ -35,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setColorActionBar()
+        setHidePassword()
         binding.btLoginLogin.setOnClickListener {
             val username = binding.edtLoginUsername.text.toString()
             val password = binding.edtLoginPassword.text.toString()
@@ -77,33 +76,45 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun Throwable.getErrorBody(): RequestError {
-        if (this is HttpException) {
-            val body = response()?.errorBody()
-            val gson = Gson()
-            val adapter = gson.getAdapter(RequestError::class.java)
-            try {
-                return adapter.fromJson(body?.string())
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+    private fun setHidePassword() {
+        binding.edtLoginPassword.apply {
+            setOnClickListener{
+                inputType = if (inputType == TYPE_CLASS_TEXT)
+                    TYPE_TEXT_VARIATION_PASSWORD
+                else TYPE_CLASS_TEXT
+
         }
-        return RequestError()
+
     }
+}
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable?.dispose()
-    }
-
-    private fun setColorActionBar() {
-        window.apply {
-            decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            this@LoginActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-            statusBarColor = Color.TRANSPARENT
+fun Throwable.getErrorBody(): RequestError {
+    if (this is HttpException) {
+        val body = response()?.errorBody()
+        val gson = Gson()
+        val adapter = gson.getAdapter(RequestError::class.java)
+        try {
+            return adapter.fromJson(body?.string())
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
+    return RequestError()
+}
+
+override fun onDestroy() {
+    super.onDestroy()
+    disposable?.dispose()
+}
+
+private fun setColorActionBar() {
+    window.apply {
+        decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        this@LoginActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        statusBarColor = Color.TRANSPARENT
+    }
+}
 
 }

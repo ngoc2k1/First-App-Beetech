@@ -50,7 +50,6 @@
         app:layout_constraintStart_toEndOf="@id/iv_login_username"
         app:layout_constraintTop_toTopOf="@id/iv_login_username" />
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_login_passowrd"
         android:layout_width="46dp"
@@ -63,33 +62,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_login_username" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textinputlayout_login_password11"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_login_password"
         android:layout_width="0dp"
         android:layout_height="43dp"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false"
+        android:background="@drawable/background_login_edittext"
+        android:drawableEnd="@drawable/ic_eye_login"
+        android:drawablePadding="11dp"
+        android:hint="@string/login_matkhau"
+        android:inputType="textPassword"
+        android:paddingStart="11dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="13dp"
+        android:paddingBottom="13dp"
+        android:text="Abcd!234"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="016sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_login_passowrd"
-        app:layout_constraintTop_toTopOf="@id/iv_login_passowrd"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_login_password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_login_edittext"
-            android:inputType="textPassword"
-            android:paddingStart="11dp"
-            android:paddingTop="14dp"
-            android:paddingEnd="14dp"
-            android:paddingBottom="13dp"
-            android:text="Abcd!234"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="@id/iv_login_passowrd" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_login_register"
@@ -146,7 +139,7 @@
         android:id="@+id/tv_login_zalo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/background_login_textview"
         android:drawableStart="@drawable/ic_zalo"
         android:drawablePadding="16dp"
@@ -185,7 +178,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/background_login_textview"
         android:drawableStart="@drawable/ic_apple"
-        android:drawablePadding="18dp"
+        android:drawablePadding="16dp"
         android:gravity="center_vertical"
         android:paddingVertical="5dp"
         android:paddingStart="18dp"
@@ -203,7 +196,7 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/background_login_textview"
         android:drawableStart="@drawable/ic_google"
-        android:drawablePadding="18dp"
+        android:drawablePadding="16dp"
         android:gravity="center_vertical"
         android:paddingVertical="5dp"
         android:paddingStart="18dp"
