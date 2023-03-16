@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setColorActionBar()
-        setHidePassword()
+
         binding.btLoginLogin.setOnClickListener {
             val username = binding.edtLoginUsername.text.toString()
             val password = binding.edtLoginPassword.text.toString()
@@ -76,45 +76,33 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setHidePassword() {
-        binding.edtLoginPassword.apply {
-            setOnClickListener{
-                inputType = if (inputType == TYPE_CLASS_TEXT)
-                    TYPE_TEXT_VARIATION_PASSWORD
-                else TYPE_CLASS_TEXT
-
+    fun Throwable.getErrorBody(): RequestError {
+        if (this is HttpException) {
+            val body = response()?.errorBody()
+            val gson = Gson()
+            val adapter = gson.getAdapter(RequestError::class.java)
+            try {
+                return adapter.fromJson(body?.string())
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
-
+        return RequestError()
     }
-}
 
-fun Throwable.getErrorBody(): RequestError {
-    if (this is HttpException) {
-        val body = response()?.errorBody()
-        val gson = Gson()
-        val adapter = gson.getAdapter(RequestError::class.java)
-        try {
-            return adapter.fromJson(body?.string())
-        } catch (e: IOException) {
-            e.printStackTrace()
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
+    }
+
+    private fun setColorActionBar() {
+        window.apply {
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            this@LoginActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+            statusBarColor = Color.TRANSPARENT
         }
     }
-    return RequestError()
-}
-
-override fun onDestroy() {
-    super.onDestroy()
-    disposable?.dispose()
-}
-
-private fun setColorActionBar() {
-    window.apply {
-        decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        this@LoginActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-        statusBarColor = Color.TRANSPARENT
-    }
-}
 
 }
