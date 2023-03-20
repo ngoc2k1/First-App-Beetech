@@ -24,4 +24,7 @@
     <string name="login_dangnhapvoigoogle">Đăng nhập với Google</string>
     <string name="login_dangnhapvoizalo">Đăng nhập với Zalo</string>
     <string name="login_matkhau">Mật khẩu</string>
+    <string name="facebook_app_id">1746717102390977</string>
+    <string name="fb_login_protocol_scheme">fb1746717102390977</string>
+
 </resources>
