@@ -2,32 +2,46 @@ package com.example.firstapp.featureauthen.interceptor
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.io.IOException
+import java.net.InetAddress
 
 
 class NetworkInterceptor(var mContext: Context) : Interceptor {
 
-    private fun hasConnection(context: Context?): Boolean {
-        if (context == null) {
-            return false
+    private fun hasConnection(context: Context): Boolean {
+        var result = false
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            connectivityManager?.run {
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.run {
+                    result = hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                            || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                            || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                }
+            }
+        } else {
+            connectivityManager?.run {
+                val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+                result = networkInfo != null && networkInfo.isConnectedOrConnecting
+            }
         }
-
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-
-        val wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-        if (wifiNetwork != null && wifiNetwork.isConnected) {
-            return true
+        if (result) {
+            result = try {
+                val ipAddr: InetAddress = InetAddress.getByName("google.com")
+                !ipAddr.equals("")
+            } catch (e: Exception) {
+                Log.e("ConnectivityInterceptor", "Error checking internet connection", e)
+                false
+            }
         }
-
-        val mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-        if (mobileNetwork != null && mobileNetwork.isConnected) {
-            return true
-        }
-
-        val activeNetwork = cm.activeNetworkInfo
-        return activeNetwork != null && activeNetwork.isConnected
+        return result
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -39,7 +53,7 @@ class NetworkInterceptor(var mContext: Context) : Interceptor {
     }
 }
 
-class NoConnectivityException : Exception() {
+class NoConnectivityException : IOException() {
     override val message: String?
         get() = "Không có kết nối mạng"
 }

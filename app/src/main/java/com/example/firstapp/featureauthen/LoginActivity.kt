@@ -60,8 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             val info = packageManager.getPackageInfo(
-                "your.package",
-                PackageManager.GET_SIGNATURES
+                "your.package", PackageManager.GET_SIGNATURES
             )
             for (signature in info.signatures) {
                 val md: MessageDigest = MessageDigest.getInstance("SHA")
@@ -93,8 +92,8 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.edtLoginUsername.text.toString()
             val password = binding.edtLoginPassword.text.toString()
             val loginRequest = LoginRequest(username, password, "asdadadsadaa", 2)
-            apiClient.chatService.createAccount(loginRequest)
-                ?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
+            apiClient.chatService.createAccount(loginRequest)?.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<LoginResponse?> {
                     override fun onSubscribe(d: Disposable) {
                         disposable = d
@@ -109,19 +108,26 @@ class LoginActivity : AppCompatActivity() {
                         if (loginResponse.code == 200) {
                             Hawk.put(HawkKey.ACCESS_TOKEN, loginResponse.data.accessToken)
                             startActivity(Intent(this@LoginActivity, ChatActivity::class.java))
-                        }
-                       else if (loginResponse.code in 400..499) {
+                        } else if (loginResponse.code in 400..499) {
+
                         }
                     }
 
                     override fun onError(throwable: Throwable) {
                         loadingDialog.dismiss()
-                        Toast.makeText(
-                            this@LoginActivity,
-                            throwable.getErrorBody().errorMessage.toString(),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        if (throwable is NoConnectivityException) {
+                            Toast.makeText(
+                                this@LoginActivity, throwable.message, Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                throwable.getErrorBody().errorMessage.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
+
                     override fun onComplete() {
                     }
                 })
@@ -141,8 +147,7 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 task.getResult(ApiException::class.java)
-                Toast.makeText(applicationContext, "Login GG success!", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(applicationContext, "Login GG success!", Toast.LENGTH_SHORT).show()
             } catch (e: ApiException) {
                 Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_SHORT)
                     .show()

@@ -7,7 +7,7 @@ data class LoginResponse(
     @SerializedName("code")
     var code: Int,
     @SerializedName("data")
-    var `data`: DataChatResponse,
+    var data: Data,
     @SerializedName("msg")
     var msg: String
 )

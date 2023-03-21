@@ -2,7 +2,7 @@ package com.example.firstapp.featureauthen.entity
 
 
 import com.google.gson.annotations.SerializedName
-data class DataChatResponse(
+data class Data(
     @SerializedName("accessToken")
     var accessToken: String,
     @SerializedName("address")
