@@ -12,6 +12,11 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firstapp.databinding.ActivityLoginBinding
+import com.example.firstapp.featureauthen.entity.LoginRequest
+import com.example.firstapp.featureauthen.entity.LoginResponse
+import com.example.firstapp.featureauthen.entity.RequestError
+import com.example.firstapp.featureauthen.interceptor.NetworkInterceptor
+import com.example.firstapp.featureauthen.interceptor.NoConnectivityException
 import com.example.firstapp.featurechat.ChatActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -21,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.gson.Gson
+import com.orhanobut.hawk.Hawk
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -37,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
     private val callbackManager = CallbackManager.Factory.create()
 
     private var disposable: Disposable? = null
-
     var gso: GoogleSignInOptions? = null
     var gsc: GoogleSignInClient? = null
 
@@ -50,6 +55,8 @@ class LoginActivity : AppCompatActivity() {
         gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         gsc = GoogleSignIn.getClient(this, gso!!)
+
+        var apiClient = ApiClient(this@LoginActivity)
 
         try {
             val info = packageManager.getPackageInfo(
@@ -86,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.edtLoginUsername.text.toString()
             val password = binding.edtLoginPassword.text.toString()
             val loginRequest = LoginRequest(username, password, "asdadadsadaa", 2)
-            ApiClient.chatService.createAccount("2.0.0", 2, loginRequest)
+            apiClient.chatService.createAccount(loginRequest)
                 ?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<LoginResponse?> {
                     override fun onSubscribe(d: Disposable) {
@@ -98,8 +105,12 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onNext(loginResponse: LoginResponse) {
                         loadingDialog.dismiss()
-                        if (loginResponse.msg == "Đăng nhập thành công!") {
+
+                        if (loginResponse.code == 200) {
+                            Hawk.put(HawkKey.ACCESS_TOKEN, loginResponse.data.accessToken)
                             startActivity(Intent(this@LoginActivity, ChatActivity::class.java))
+                        }
+                       else if (loginResponse.code in 400..499) {
                         }
                     }
 
@@ -110,11 +121,7 @@ class LoginActivity : AppCompatActivity() {
                             throwable.getErrorBody().errorMessage.toString(),
                             Toast.LENGTH_LONG
                         ).show()
-                        Log.d(
-                            "error", "onError: " + throwable.getErrorBody().errorMessage.toString()
-                        )
                     }
-
                     override fun onComplete() {
                     }
                 })

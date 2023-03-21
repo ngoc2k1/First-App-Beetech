@@ -1,4 +1,4 @@
-package com.example.firstapp.featureauthen
+package com.example.firstapp.featureauthen.entity
 
 import com.google.gson.annotations.SerializedName
 

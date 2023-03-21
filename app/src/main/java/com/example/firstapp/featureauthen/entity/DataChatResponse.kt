@@ -1,7 +1,6 @@
-package com.example.firstapp.featureauthen
+package com.example.firstapp.featureauthen.entity
 
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 data class DataChatResponse(
     @SerializedName("accessToken")
